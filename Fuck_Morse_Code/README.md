@@ -5,7 +5,6 @@
 ## Usage:
 
 ```
-usage: Fuck_Morse_Code.py -s string
 -h,--help		-帮助说明
 -c,--cmd		-进入交互式界面，一个个翻译摩斯密码(具体看cmd下的命令)
 -s,				-后接摩斯密码，将之翻译成字符串
