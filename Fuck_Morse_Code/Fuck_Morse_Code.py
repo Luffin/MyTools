@@ -1,4 +1,7 @@
 # coding=utf8
+
+__auther__ = 'Luffin'
+
 import sys
 import getopt
 from os import system
