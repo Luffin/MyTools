@@ -1,4 +1,4 @@
-# Fuck_Morse_Code.py
+# Fuck_Morse_Code.py-2015.10.19
 ---
 这是一个用于翻译摩斯码的脚本
 
