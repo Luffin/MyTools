@@ -1,4 +1,6 @@
+#!/usr/bin/env python
 #coding=utf8
+
 from string import digits,lowercase,uppercase
 from hashlib import md5
 from random import seed,sample
