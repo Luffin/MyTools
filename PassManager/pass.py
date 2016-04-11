@@ -41,8 +41,7 @@ def main():
 		symbol = raw_input('请输入密码代号：')
 
 	md5_hash = md5(base_pass + symbol).hexdigest()[:16]
-	num = [x for x in md5_hash if x in digits]
-	num = int(''.join(num))
+	num = int(''.join([x for x in md5_hash if x in digits]))
 	seed(num)
 	final_pass = ''.join(sample(Dictionary, 32))
 	myprint('g', '\n[+] 密码已生成：' + final_pass)
