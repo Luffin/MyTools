@@ -1,11 +1,12 @@
 import os,sys
-from time import sleep
+from time import sleep,ctime
 import re
 
 global list_time
 global log
 list_time = []
 log = open('log.txt', 'a+')
+print '[+] log.txt creat at %s' % (os.pardir + os.sep + 'log.txt')
 
 def getTime(fileurl):
 	global list_time
@@ -49,8 +50,9 @@ def delshell(fileurl ,max_time):
 				file_time = int(os.path.getmtime(i))
 				file_size = os.path.getsize(i)
 				if max_time < file_time:
-					output = '[!] Find a suspicious file:'+os.getcwd()+os.sep+i
+					output = '[!] ' + ctime() + ' Find a suspicious file:'+os.getcwd()+os.sep+i
 					log.write(output + '\n')
+					log.flush()
 					print output
 					output = ''
 					# if i != '.DS_Store':
@@ -62,8 +64,9 @@ def delshell(fileurl ,max_time):
 					os.remove(i)
 				elif file_size < 200:
 					if attribute_code_shell(i):
-						output = '[!] Find a suspicious file:'+os.getcwd()+os.sep+i
+						output = '[!] ' + ctime() + ' Find a suspicious file:'+os.getcwd()+os.sep+i
 						log.write(output)
+						log.flush()
 						print output
 						output = ''
 						# if i != '.DS_Store':
@@ -72,7 +75,8 @@ def delshell(fileurl ,max_time):
 						output += '=' * 20 + '\n'
 						log.write(output)
 						print output
-						os.remove(i)	
+						os.remove(i)
+				log.flush()
 			if os.path.isdir(i):
 				delshell(i ,max_time)
 				os.chdir(os.pardir)
@@ -110,7 +114,7 @@ def main(fileurl):
 if __name__ == '__main__':
 	global log
 	if not len(sys.argv) > 1:
-		print '[!] get_time.py must get a parameter!'
+		print '[!] get_time.py must get a parameter!\nUsage:python %s path' % sys.argv[0]
 	elif sys.argv[1]:
 		path = os.getcwd()
 		path += os.sep + sys.argv[1]
@@ -125,6 +129,7 @@ if __name__ == '__main__':
 			f.write(str(MAX_TIME))
 			f.close()
 		print '[+] Get max time ==>',MAX_TIME
+		print '[+] time.txt creat at %s' % (os.pardir + os.sep + 'time.txt')
 		print '[+] Start checking'
 		while True:
 			sleep(3)
