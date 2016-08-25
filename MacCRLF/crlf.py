@@ -3,13 +3,20 @@
 
 import sys
 
-if len(sys.argv) < 3:
-    print 'Usage:\n\tpython %s filename output' % (sys.argv[0])
+if len(sys.argv) < 2:
+    print 'Usage:\n\tpython %s filename {output}' % (sys.argv[0])
     sys.exit(0)
 
-with open(sys.argv[1], 'rb') as input, open(sys.argv[2], 'wb') as output:
-    content = input.read().replace('\x0a', '\x0d\x0a')
-    output.write(content)
+in_name = sys.argv[1]
+if len(sys.argv) < 3:
+    out_name = sys.argv[1]
+else:
+    out_name = sys.argv[2]
 
-input.close()
-output.close()
+with open(in_name, 'rb') as input:
+    content = input.read().replace('\x0a', '\x0d\x0a')
+    input.close()
+
+with open(out_name, 'wb') as output:
+    output.write(content)
+    output.close()
