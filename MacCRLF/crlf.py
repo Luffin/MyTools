@@ -15,8 +15,6 @@ else:
 
 with open(in_name, 'rb') as input:
     content = input.read().replace('\x0a', '\x0d\x0a')
-    input.close()
 
 with open(out_name, 'wb') as output:
     output.write(content)
-    output.close()
