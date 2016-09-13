@@ -6,4 +6,4 @@
 	Usage:
 		python crlf.py filename output
 		filename        要转换的文件
-		output          要生产的文件名
+		output          要生成的文件名
