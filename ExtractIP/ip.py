@@ -2,7 +2,7 @@ import re
 import sys
 
 if len(sys.argv) < 2:
-    print 'Usage:\n\t%s filename outputname'
+    print 'Usage:\n\tpython %s filename outputname' % (sys.argv[0])
     sys.exit(0)
 
 outputname = 'result.txt'
