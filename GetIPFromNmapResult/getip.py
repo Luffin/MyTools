@@ -3,8 +3,16 @@ import re
 
 
 def splitNmapResult(content):
-    infolist = re.findall('Nmap scan report for[\s\S]+?Service Info:', content)
-    return infolist
+    ret = []
+    buff = ''
+    for line in content:
+        if 'Nmap scan report for' in line and line not in buff:
+            if buff:
+                ret.append(buff)
+            buff = line
+        else:
+            buff += line
+    return ret
 
 
 def getIP(content):
@@ -36,9 +44,10 @@ if __name__ == '__main__':
     iplist = []
 
     with open(filename, 'r') as f:
-        content = f.read()
+        content = f.readlines()
 
     result_list = splitNmapResult(content)
+
     for result in result_list:
         if findInfo(result, info):
             iplist.append(getIP(result))
