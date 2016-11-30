@@ -4,6 +4,8 @@
 from string import digits, lowercase, uppercase
 from hashlib import md5
 from random import seed, sample
+from getpass import getpass
+
 
 Dictionary = digits + lowercase + uppercase + '_/+-'
 
@@ -35,15 +37,15 @@ def main():
     usage()
     msg1 = '请输入基础密码：'
     msg2 = '请输入密码代号：'
-    base_pass = raw_input(msg1)
+    base_pass = getpass(msg1)
     while not base_pass:
         myprint('r', u'[!] 输入错误！还没有输入基础密码，请重新输入')
-        base_pass = raw_input(u'请输入基础密码：')
+        base_pass = getpass(u'请输入基础密码：')
 
-    symbol = raw_input(msg2)
+    symbol = getpass(msg2)
     while not symbol:
         myprint('r', u'[!] 输入错误！还没有输入密码代号，请重新输入')
-        symbol = raw_input(msg2)
+        symbol = getpass(msg2)
 
     md5_hash = md5(base_pass + symbol).hexdigest()[:16]
     num = int(''.join([x for x in md5_hash if x in digits]))
