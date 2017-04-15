@@ -14,8 +14,11 @@ if len(sys.argv) < 3:
 name_file = sys.argv[1]
 pass_file = sys.argv[2]
 
-names = open(name_file, 'r').read().split('\n')[:-1]
-passwords = open(pass_file, 'r').read().split('\n')[:-1]
+with open(name_file, 'r') as namefile:
+    names = [_.strip() for _ in namefile.readlines() if _.strip()]
+with open(pass_file, 'r') as passfile:
+    passwords = [_.strip() for _ in passfile.readlines() if _.strip()]
+
 names_len = len(names)
 pass_len = len(passwords)
 total = names_len * pass_len
@@ -26,7 +29,7 @@ for name in names:
     for password in passwords:
         count += 1
         res.write(('%s:%s' % (name, password)).encode('base64'))
-        sys.stdout.write('\r %.2f%s | %d done | %d remain | %d total' % (count/float(total) * 100, '%', count, total - count, total))
+        sys.stdout.write('\r %.2f%s | %d done | %d remain | %d total' % (count / float(total) * 100, '%', count, total - count, total))
         sys.stdout.flush()
 
 res.close()
