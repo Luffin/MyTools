@@ -6,24 +6,10 @@ from hashlib import md5
 from random import seed, sample
 from getpass import getpass
 from os import system
+from subprocess import mswindows
 
 
 Dictionary = digits + lowercase + uppercase + '_/+-'
-
-
-def myprint(color, mes):
-    if color == 'r':
-        fore = 31
-    elif color == 'g':
-        fore = 32
-    elif color == 'b':
-        fore = 34
-    elif color == 'y':
-        fore = 33
-    else:
-        fore = 37
-    color = "\x1B[%d;%dm" % (1, fore)
-    print "%s%s\x1B[0m" % (color, mes)
 
 
 def usage():
@@ -34,41 +20,58 @@ def usage():
     print u'随后程序会生成一个由0-9、a-z、A-Z以及其他符号组成的密码\n\n'
 
 
-def genPass(base_pass, symbol):
+def genPass(base_pass, symbol, length=32):
     md5_hash = md5(base_pass + symbol).hexdigest()[:16]
     num = int(''.join([x for x in md5_hash if x in digits]))
     seed(num)
-    final_pass = ''.join(sample(Dictionary, 32))
+    final_pass = ''.join(sample(Dictionary, length))
     return final_pass
 
 
 def main():
     usage()
-    msg1 = '请输入基础密码：'
-    msg2 = '请输入密码代号：'
-    msg3 = '不显示密码将密码直接传入剪切板?(y/n)：'
+    msg1 = u'请输入基础密码'
+    msg2 = u'请输入密码代号'
+    msg3 = u'不显示密码将密码直接传入剪切板?(y/n)或直接回车：'
+    msg4 = u'输入密码长度，直接回车默认32位：'
 
-    base_pass = getpass(msg1)
+    print msg1
+    base_pass = getpass()
     while not base_pass:
-        myprint('r', u'[!] 输入错误！还没有输入基础密码，请重新输入')
-        base_pass = getpass(u'请输入基础密码：')
+        print u'[!] 输入错误！还没有输入基础密码，请重新输入'
+        print msg1
+        base_pass = getpass()
 
-    symbol = getpass(msg2)
+    print msg2
+    symbol = getpass()
     while not symbol:
-        myprint('r', u'[!] 输入错误！还没有输入密码代号，请重新输入')
-        symbol = getpass(msg2)
+        print u'[!] 输入错误！还没有输入密码代号，请重新输入'
+        print msg2
+        symbol = getpass()
 
-    final_pass = genPass(base_pass, symbol)
+    print msg4
+    length = raw_input()
+    if not length:
+        length = 32
+    else:
+        length = int(length)
 
-    display_pass = raw_input(msg3)
-    while not display_pass or (display_pass not in ('y', 'Y', 'n', 'N')):
-        myprint('r', u'[!]输入错误！请输入(Y/N)或(y/n)')
-        display_pass = raw_input(msg3)
-    if display_pass in ('y', 'Y'):
-        cmd = 'echo "%s" | tr -d "\n" | pbcopy' % final_pass.strip()
+    final_pass = genPass(base_pass, symbol, length)
+
+    print msg3
+    display_pass = raw_input()
+    while display_pass not in ('y', 'Y', 'n', 'N', ''):
+        print u'[!]输入错误！请输入(Y/N)或(y/n)或直接回车'
+        print msg3
+        display_pass = raw_input()
+    if display_pass in ('y', 'Y', ''):
+        if mswindows:
+            cmd = 'echo %s| clip' % final_pass.strip()
+        else:
+            cmd = 'echo "%s" | tr -d "\n" | pbcopy' % final_pass.strip()
         system(cmd)
     elif display_pass in ('n', 'N'):
-        myprint('g', u'\n[+] 密码已生成：' + final_pass)
+        print u'\n[+] 密码已生成：' + final_pass
 
 
 if __name__ == '__main__':

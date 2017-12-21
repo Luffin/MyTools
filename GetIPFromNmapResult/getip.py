@@ -22,13 +22,18 @@ def getIP(content):
 
 def findInfo(content, info):
     infolist = content.split('\n')
+    if ',' in info:
+        info_list = info.split(',')
+    else:
+        info_list = [info]
     for line in infolist:
-        if info.isdigit():
-            if line.startswith(info + '/') and 'open' in line:
-                return True
-        else:
-            if info in line and 'open' in line:
-                return True
+        for info in info_list:
+            if info.isdigit():
+                if line.startswith(info + '/') and 'open' in line:
+                    return True
+            else:
+                if info in line and 'open' in line:
+                    return True
     return False
 
 
