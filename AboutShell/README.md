@@ -1,9 +1,9 @@
-#AboutShell-2015.12.3
+# AboutShell-2015.12.3
 ---
 
 自己写的简单工具，没有想得特别多，所以写的比较简单粗暴，算是当时编写的分析能力的记录吧
 
-###Del_shell.py(在服务器上简单查杀shell的工具)
+### Del_shell.py(在服务器上简单查杀shell的工具)
 
 运行，`path`参数即需要检测webshell的文件夹路径
 
@@ -23,7 +23,8 @@
 这些非法文件的文件内容都会被记录到`log.txt`，以便查看webshell内容，方便其他操作
 
 以上`time.txt`和`log.txt`文件都创建在运行脚本的文件夹下
-###Continue_Connecting.py(持续访问网站文件的脚本)
+
+### Continue_Connecting.py(持续访问网站文件的脚本)
 
 Usage：
 
@@ -34,6 +35,6 @@ Usage：
 Example：
 	
 	python Continue_Connecting.py -u http://192.168.3.4 -f ooxx.php -n 10000
-###Not_Easy_Go_Die.php(不死马)
+### Not_Easy_Go_Die.php(不死马)
 
 PHP不死马，间隔1秒循环检查`1.php`是否存在，若不存在则创建它，并写入指定内容。
