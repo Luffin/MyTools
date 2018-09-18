@@ -3,6 +3,7 @@ import sys
 if __name__ == '__main__':
     if len(sys.argv) < 2:
         print 'Usage:\n\tpython %s filename {output}' % sys.argv[0]
+        sys.exit(0)
 
     in_name = sys.argv[1]
     if len(sys.argv) < 3:
@@ -20,7 +21,7 @@ if __name__ == '__main__':
     length_after = len(result)
 
     with open(out_name, 'w') as f:
-        for line in content:
+        for line in result:
             f.write(line + '\r\n')
 
     print '[+] Done~'
