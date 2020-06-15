@@ -15,3 +15,4 @@ Time | Name
 2016.09.12 | ExtractIP
 2016.09.13 | GetIPFromNmapResult
 2018.09.18 | Dereplication
+2020.06.15 | ShodanFaviconHash 
