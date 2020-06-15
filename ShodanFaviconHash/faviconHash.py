@@ -10,7 +10,7 @@ def getURL(html):
     links = soup.find_all('link')
     try:
         for l in links:
-            if 'favicon.ico' in l.get('href'):
+            if '.ico' in l.get('href'):
                 return l.get('href')
     except Exception:
         return False
@@ -24,6 +24,7 @@ url = sys.argv[1]
 fav_url = getURL(requests.get(url, verify=False).content)
 if not fav_url:
     fav_url = '/favicon.ico'
+print '[+] URL ==> %s' % (url + fav_url)
 favicon = requests.get(url + fav_url, verify=False).content
 hash = mmh3.hash(favicon.encode('base64'))
 print '[+] %s/favicon.ico ==> %s' % (url, hash)
