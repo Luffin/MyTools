@@ -7,6 +7,8 @@ from bs4 import BeautifulSoup
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
+headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36'}
+
 
 def getURL(html):
     soup = BeautifulSoup(html, 'lxml')
@@ -37,7 +39,7 @@ if len(sys.argv) < 2:
 url = sys.argv[1]
 scheme, netloc, path, filename = urlParser(url)
 
-fav_url = getURL(requests.get(url, verify=False).content)
+fav_url = getURL(requests.get(url, verify=False, headers=headers).content)
 
 if not fav_url:
     fav_url = '/favicon.ico'
@@ -49,6 +51,6 @@ else:
         final_url = urlparse.urlunsplit((scheme, netloc, path + fav_url, '', ''))
 
 print '[+] URL ==> %s' % (final_url)
-favicon = requests.get(final_url, verify=False).content
+favicon = requests.get(final_url, verify=False, headers=headers).content
 hash = mmh3.hash(favicon.encode('base64'))
 print '[+] %s ==> %s' % (final_url, hash)
